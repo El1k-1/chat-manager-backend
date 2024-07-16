@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+/docker
+session_db.json
+
 # Logs
 logs
 *.log

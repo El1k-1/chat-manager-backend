@@ -1,0 +1,26 @@
+version: "3.8"
+
+networks:
+  db-net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres
+    restart: always
+    command: postgres
+    env_file:
+      .env
+    environment:
+      POSTGRES_HOST: $POSTGRES_HOST
+      POSTGRES_USER: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DATABASE
+    ports:
+      - $POSTGRES_PORT:$POSTGRES_PORT
+    expose:
+      - $POSTGRES_PORT
+    volumes:
+      - ./docker/dbdata:/var/lib/POSTGRES/
+    networks:
+      - db-net
