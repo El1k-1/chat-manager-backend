@@ -6,6 +6,10 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { DataSource } from 'typeorm';
 import { LoggerModule as LoggerRollbarModule } from 'nestjs-rollbar';
+import { UsersModule } from './modules/users/users.module';
+import { ChatsModule } from './modules/chats/chats.module';
+import { MessagesModule } from './modules/messages/messages.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -54,7 +58,14 @@ import { LoggerModule as LoggerRollbarModule } from 'nestjs-rollbar';
           ...config.postgres,
         } as TypeOrmModuleOptions;
       },
-    })
+      dataSourceFactory: async options => {
+        return await new DataSource(options).initialize();
+      },
+    }),
+    ScheduleModule.forRoot(),
+    UsersModule,
+    ChatsModule,
+    MessagesModule,
   ],
 })
 export class AppModule {}

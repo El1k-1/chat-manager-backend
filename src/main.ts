@@ -6,6 +6,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { IApp } from './common/configuration';
 import { ValidationCustomException } from './common/response';
+import { GlobalExceptionsFilter } from '@common/response/exception.filter';
 
 
 async function start() {
@@ -15,6 +16,7 @@ async function start() {
     credentials: true,
   });
   const configApp = app.get(ConfigService).get<IApp>('app');
+  
   const documentationConfig = new DocumentBuilder()
     .setTitle('Template Nest')
     .setDescription('Описание API Template Nest')
@@ -29,9 +31,13 @@ async function start() {
     new ValidationPipe({
       enableDebugMessages: true,
       forbidUnknownValues: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
       exceptionFactory: errors => new ValidationCustomException(errors),
     }),
   );
+  app.useGlobalFilters(new GlobalExceptionsFilter());
   await app.listen(configApp.port, configApp.address, () =>
     console.info(`Server started on port: ${configApp.port} by ${process.env.NODE_ENV} mode`),
   );

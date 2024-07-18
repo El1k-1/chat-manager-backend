@@ -36,7 +36,7 @@ export class Respond<T = any> {
     };
   }
 
-  static many<T>(data: T, findOptions: FindOptions): Respond<T> {
+  static many<T>(data: T, findOptions?: FindOptions): Respond<T> {
     return {
       success: true,
       status: HttpStatus.OK,

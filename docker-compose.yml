@@ -24,3 +24,21 @@ services:
       - ./docker/dbdata:/var/lib/POSTGRES/
     networks:
       - db-net
+
+  template-nest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ./docker/app/logs:/app/logs
+    ports:
+      - $APP_PORT:$APP_PORT
+    networks:
+      - db-net
+    depends_on:
+      - db
