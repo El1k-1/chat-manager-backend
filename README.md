@@ -11,28 +11,15 @@
 $ npm install
 ```
 
-## Запуск приложения
+## Запуск Prod версии
 
+Склоннировать проект.
+В папке chat-manager-beckend запустить:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
 # production mode
-$ npm run start:prod
+$ docker-compose up -d
+
 ```
+<h3>Документация Api Swagger</h3>
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+http://localhost:9000/docs#/
