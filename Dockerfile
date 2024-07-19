@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20.11.0
 
 WORKDIR /app
 
@@ -14,6 +14,6 @@ RUN npm run build
 
 RUN mkdir /app/logs
 
-EXPOSE 3040
+EXPOSE 9000
 
 CMD [ "npm", "run", "start:prod" ]
