@@ -10,6 +10,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ChatsModule } from './modules/chats/chats.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SocketModule } from '@modules/web-socket/socket.module';
 
 @Module({
   imports: [
@@ -66,6 +67,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     UsersModule,
     ChatsModule,
     MessagesModule,
+    SocketModule,
   ],
+  // providers: [SocketService]
 })
 export class AppModule {}

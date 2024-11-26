@@ -16,6 +16,7 @@ async function start() {
     credentials: true,
   });
   const configApp = app.get(ConfigService).get<IApp>('app');
+  const configService = app.get(ConfigService);
   
   const documentationConfig = new DocumentBuilder()
     .setTitle('Template Nest')
