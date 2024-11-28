@@ -4,6 +4,7 @@ import { HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { EntityManager } from 'typeorm';
+import { UserLoginDto } from './dto/user-login.dto';
 
 @Injectable()
 export class UsersService {
@@ -11,13 +12,14 @@ export class UsersService {
         @InjectDataSource()
         private readonly connection: DataSource
     ) {}
-     public async create(dto: UserCreateDto, manager: EntityManager = this.connection.manager) : Promise<User> {
+
+     public async login(dto: UserLoginDto, manager: EntityManager = this.connection.manager) : Promise<Object> {
         return manager.transaction(async(m: EntityManager) => {
-            const isExist = await m.existsBy(User, { username: dto.username });
-            if (isExist){
-                throw new HttpException('User already exists',HttpStatus.INTERNAL_SERVER_ERROR);
+            const user = await m.findOneBy(User, { username: dto.login, password: dto.password });
+            if (!user){
+                return {code: 2}
             }
-            return await m.save(User,dto);
+            return {code: 1, user: user.username};
         } )
      }
 }
