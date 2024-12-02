@@ -5,6 +5,7 @@ import { User } from './models/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UserCheckDto } from './dto/user-check.dto';
+import { UserRegistrDto } from './dto/user-registr.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -18,7 +19,7 @@ export class UsersController {
     async auth(@Body() dto: UserAuthDto): Promise<Respond<Object>> {
         const result = await this.service.auth(dto)
         if (result) {
-            return Respond.one({login: result})
+            return Respond.one({token: result})
         } else return Respond.notOk()
     }
     @ApiRespond( Post('me'), Number, {
@@ -26,9 +27,9 @@ export class UsersController {
         status: HttpStatus.OK
     })
     async checkMe(@Body() dto: UserCheckDto): Promise<Respond<Object>> {
-        const result = await this.service.checkMe(dto)
-        if (result) {
-            return Respond.one(result)
+        const login = await this.service.checkMe(dto)
+        if (login) {
+            return Respond.one({login})
         } else return Respond.notOk()
     }
 
@@ -36,10 +37,10 @@ export class UsersController {
         summary: 'Регистрация пользователя',
         status: HttpStatus.OK
     })
-    async registration(@Body() dto: UserAuthDto): Promise<Respond<Object>> {
+    async registration(@Body() dto: UserRegistrDto): Promise<Respond<Object>> {
         const result = await this.service.registration(dto)
         if (result) {
-            return Respond.one({result})
+            return Respond.one({token: result})
         } else {
             return Respond.notOk()
         }

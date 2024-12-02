@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm';
 import { LoggerModule as LoggerRollbarModule } from 'nestjs-rollbar';
 import { UsersModule } from './modules/users/users.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { CarsModule } from '@modules/cars/cars.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     ScheduleModule.forRoot(),
     UsersModule,
+    CarsModule,
   ],
 })
 export class AppModule {}

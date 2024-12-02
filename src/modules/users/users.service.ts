@@ -18,8 +18,10 @@ export class UsersService {
     }
     public async auth(dto: UserAuthDto, manager: EntityManager = this.connection.manager) : Promise<string> {
         const user = await manager.findOneBy(User, {login: dto.login})
-        if (await bcrypt.compare(dto.password, user.token)) {
-            return user.token
+        if(user) {
+            if (await bcrypt.compare(dto.password, user.token)) {
+                return user.token
+            } else return ''
         } else return ''
     
     }
@@ -34,8 +36,9 @@ export class UsersService {
         return manager.transaction(async(m: EntityManager) => {
             const user = await manager.existsBy(User, {login: dto.login})
             if (!user) {
-                m.save(User,{...dto, token: await this.hashPassword(dto.password)})
-                return await this.hashPassword(dto.password)
+                const token = await this.hashPassword(dto.password)
+                m.save(User,{...dto, token })
+                return token
             } else {
                 return ''
             }
