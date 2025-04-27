@@ -9,6 +9,7 @@ import { LoggerModule as LoggerRollbarModule } from 'nestjs-rollbar';
 import { UsersModule } from './modules/users/users.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CarsModule } from '@modules/cars/cars.module';
+import { QueryModule } from '@modules/query/query.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { CarsModule } from '@modules/cars/cars.module';
     ScheduleModule.forRoot(),
     UsersModule,
     CarsModule,
+    QueryModule
   ],
 })
 export class AppModule {}

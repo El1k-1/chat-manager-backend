@@ -27,9 +27,9 @@ export class UsersController {
         status: HttpStatus.OK
     })
     async checkMe(@Body() dto: UserCheckDto): Promise<Respond<Object>> {
-        const login = await this.service.checkMe(dto)
-        if (login) {
-            return Respond.one({login})
+        const user = await this.service.checkMe(dto)
+        if (user?.login) {
+            return Respond.one({login: user.login ,permission_id: user?.permission_id})
         } else return Respond.notOk()
     }
 

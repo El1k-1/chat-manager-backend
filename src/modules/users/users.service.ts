@@ -25,10 +25,10 @@ export class UsersService {
         } else return ''
     
     }
-    public async checkMe(dto: UserCheckDto, manager: EntityManager = this.connection.manager) : Promise<string> {
+    public async checkMe(dto: UserCheckDto, manager: EntityManager = this.connection.manager) : Promise<User> {
         const user = await manager.findOneBy(User, {token: dto.token})
         if (user) {
-            return user.login
+            return user
         } else return null
     
     }
@@ -37,7 +37,7 @@ export class UsersService {
             const user = await manager.existsBy(User, {login: dto.login})
             if (!user) {
                 const token = await this.hashPassword(dto.password)
-                m.save(User,{...dto, token })
+                m.save(User,{...dto, token, permission_id: 1, })
                 return token
             } else {
                 return ''

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Query } from "@modules/query/models/query.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'Users'})
 export class User {
@@ -16,7 +17,16 @@ export class User {
 
     @Column({type: 'varchar', length: 64})
     email: string;
+
+    @Column({type: 'int', nullable: true, default: () => '1' })
+    permission_id: number;
     
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at?: Date;
+
+    @OneToMany(() => Query, query => query.type, {
+        cascade: ['insert', 'update', 'remove'],
+        onDelete: 'CASCADE',
+      })
+    queries?: Query[];
 }
