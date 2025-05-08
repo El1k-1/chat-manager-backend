@@ -18,8 +18,8 @@ export class Query {
 
     @ManyToOne(() => User, u => u.queries)
     @JoinColumn()
-    fromUser?: User;
-    @RelationId((query: Query) => query.fromUser)
+    user?: User;
+    @RelationId((query: Query) => query.user)
     @Column()
     userId?: number;
 
