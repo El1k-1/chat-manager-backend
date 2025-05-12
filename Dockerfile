@@ -14,6 +14,4 @@ RUN npm run build
 
 RUN mkdir /app/logs
 
-EXPOSE 9000
-
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "npm", "run", "start:dev" ]
