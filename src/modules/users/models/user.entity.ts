@@ -1,5 +1,5 @@
-import { Chat } from "@modules/chats/models/chat.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Query } from "@modules/query/models/query.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'Users'})
 export class User {
@@ -7,11 +7,26 @@ export class User {
     id: number;
 
     @Column({type: 'varchar', length: 64})
-    username: string;
+    login: string;
 
+    @Column({type: 'varchar', length: 64})
+    password: string;
+
+    @Column({type: 'varchar', length: 64})
+    token: string;
+
+    @Column({type: 'varchar', length: 64})
+    email: string;
+
+    @Column({type: 'int', nullable: true, default: () => '1' })
+    permission_id: number;
+    
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at?: Date;
 
-    @ManyToMany(() => Chat, chat => chat.users, {cascade: true})
-    chats: Chat[]
+    @OneToMany(() => Query, query => query.type, {
+        cascade: ['insert', 'update', 'remove'],
+        onDelete: 'CASCADE',
+      })
+    queries?: Query[];
 }

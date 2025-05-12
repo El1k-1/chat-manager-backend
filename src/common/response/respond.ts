@@ -28,6 +28,13 @@ export class Respond<T = any> {
     };
   }
 
+  static notOk(): Respond {
+    return {
+      success: false,
+      status: HttpStatus.UNAUTHORIZED,
+    };
+  }
+
   static one<T>(data: T): Respond<T> {
     return {
       success: true,

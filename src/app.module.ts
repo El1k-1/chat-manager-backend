@@ -7,9 +7,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { DataSource } from 'typeorm';
 import { LoggerModule as LoggerRollbarModule } from 'nestjs-rollbar';
 import { UsersModule } from './modules/users/users.module';
-import { ChatsModule } from './modules/chats/chats.module';
-import { MessagesModule } from './modules/messages/messages.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { CarsModule } from '@modules/cars/cars.module';
+import { QueryModule } from '@modules/query/query.module';
 
 @Module({
   imports: [
@@ -64,8 +64,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     ScheduleModule.forRoot(),
     UsersModule,
-    ChatsModule,
-    MessagesModule,
+    CarsModule,
+    QueryModule
   ],
 })
 export class AppModule {}
