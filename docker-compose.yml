@@ -1,7 +1,7 @@
 
 networks:
-  db-net:
-    driver: bridge
+  dev:
+    name: proxy_dev
 
 services:
   db:
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./docker/dbdata:/var/lib/POSTGRES/
     networks:
-      - db-net
+      - dev
 
   template-nest:
     build:
@@ -40,6 +40,6 @@ services:
     expose:
       - $APP_PORT
     networks:
-      - db-net
+      - dev
     depends_on:
       - db
